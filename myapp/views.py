@@ -43,7 +43,7 @@ def create_user(request):
             grpc_response = stub.CreateUser(user_request, timeout=10)
             print("gRPC recieve", grpc_response)
 
-        print("I am here 2")
+        print("Test line length with ruff Test line length wi Test line length with ruff Test line length with ruff")
 
         print("gRPC recieve", grpc_response)
         return JsonResponse(
