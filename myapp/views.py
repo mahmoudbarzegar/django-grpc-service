@@ -22,7 +22,6 @@ def call_grpc(request):
 def create_user(request):
     try:
         data = json.loads(request.body.decode("utf-8"))
-        print("Received data:", data)
 
         # Validate required fields
         username = data.get("username")
@@ -32,20 +31,12 @@ def create_user(request):
         if not all([username, email, password]):
             return JsonResponse({"success": False, "message": "Missing required fields"}, status=400)
 
-        print("I am here")
-
         with grpc.insecure_channel("localhost:50051") as channel:
-            print("gRPC recieve")
-
             stub = service_pb2_grpc.MyServiceStub(channel)
             # Example user data
             user_request = service_pb2.CreateUserRequest(username=username, email=email, password=password)
             grpc_response = stub.CreateUser(user_request, timeout=10)
-            print("gRPC recieve", grpc_response)
 
-        print("Test line length with ruff Test line length wi Test line length with ruff Test line length with ruff")
-
-        print("gRPC recieve", grpc_response)
         return JsonResponse(
             {"success": grpc_response.success, "message": grpc_response.message},
             status=201 if grpc_response.success else 400,
